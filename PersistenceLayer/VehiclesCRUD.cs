@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static PersistenceLayer.Program;
@@ -65,6 +66,22 @@ namespace PersistenceLayer
 
                 db.SaveChanges();
             }
+        }
+
+        public static List<Trip> GetHistory(int VehicleId)
+        {
+            List<Trip> trips = new List<Trip>();
+
+            using (var db = new TripContext())
+            {
+                var collection = db.Trips.Include(t => t.Vehicle).
+                    Include(t => t.Employee).
+                    Where(t => t.Vehicle.VehicleId == VehicleId);
+
+                foreach (var item in collection)
+                    trips.Add(item);
+            }
+            return trips;
         }
     }
 }

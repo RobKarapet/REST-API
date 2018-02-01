@@ -21,9 +21,10 @@ namespace WebAPI.Controllers
             return PersistenceLayer.VehiclesCRUD.GetVehicle(id);
         }
 
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost("{id}")]
+        public object Post(int id)
         {
+            return PersistenceLayer.VehiclesCRUD.GetHistory(id);
         }
 
         [HttpPut]
