@@ -28,6 +28,35 @@ namespace WebAPI.Controllers
             return o;
         }
 
+        [HttpGet("history/{id}")]
+        public object Get(int id, int temp)
+        {
+            List<PersistenceLayer.Program.Trip> trips =
+                PersistenceLayer.EmployeesCRUD.GetHistory(id);
+            List<Trip2> trips2 = new List<Trip2>();
+
+            foreach (var item in trips)
+            {
+                trips2.Add(new Trip2
+                {
+                    EmployeeId = item.Employee.EmployeeId,
+                    FinalOdometer = item.FinalOdometer,
+                    FinishTime = item.FinishTime,
+                    InitialOdometer = item.InitialOdometer,
+                    ProjectFunction = item.ProjectFunction,
+                    ProjectTitle = item.ProjectTitle,
+                    Purpose = item.Purpose,
+                    StartTime = item.StartTime,
+                    TaskOrder = item.TaskOrder,
+                    TripId = item.TripId,
+                    TripPath = item.TripPath,
+                    VehicleId = item.Vehicle.VehicleId
+                });
+            }
+
+            return trips2;
+        }
+
         [HttpPost("{id}")]
         public object Post(int id)
         {
