@@ -50,6 +50,12 @@ namespace WebAPI.Controllers
             return PersistenceLayer.TripsCRUD.GetTrip(id);
         }
 
+        [HttpGet("path/{id}")]
+        public object Get(int id, int temp)
+        {
+            return PersistenceLayer.TripsCRUD.GetTrip(id).TripPath;
+        }
+
         [HttpPost]
         public void Post([FromBody]PersistenceLayer.Program.Trip value)
         {
